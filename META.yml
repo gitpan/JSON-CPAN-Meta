@@ -1,0 +1,28 @@
+{
+   "no_index" : {
+      "directory" : [
+         "t",
+         "inc"
+      ]
+   },
+   "meta-spec" : {
+      "version" : 1.4,
+      "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
+   },
+   "generated_by" : "ExtUtils::MakeMaker::JSONMETA version 1.000",
+   "distribution_type" : "module",
+   "version" : "1.000",
+   "name" : "JSON-CPAN-Meta",
+   "author" : [
+      "Ricardo Signes <rjbs@cpan.org>"
+   ],
+   "license" : "unknown",
+   "requires" : {
+      "ExtUtils::MakeMaker" : 6,
+      "JSON" : 2
+   },
+   "abstract" : "JSON is YAML; emit JSON into META.yml",
+   "configure_requires" : {
+      "ExtUtils::MakeMaker" : 0
+   }
+}
