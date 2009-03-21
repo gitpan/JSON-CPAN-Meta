@@ -9,9 +9,9 @@
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "generated_by" : "ExtUtils::MakeMaker::JSONMETA version 3.000",
+   "generated_by" : "ExtUtils::MakeMaker::JSONMETA version 4.000",
    "distribution_type" : "module",
-   "version" : "3.000",
+   "version" : "4.000",
    "name" : "JSON-CPAN-Meta",
    "author" : [
       "Ricardo Signes <rjbs@cpan.org>"
