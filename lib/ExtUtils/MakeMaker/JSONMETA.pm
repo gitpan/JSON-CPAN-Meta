@@ -2,14 +2,14 @@ use strict;
 use warnings;
 
 package ExtUtils::MakeMaker::JSONMETA;
-our $VERSION = '5.000';
+our $VERSION = '6.000';
 
 use ExtUtils::MM_Any;
 use JSON 2;
 
 =head1 NAME
 
-ExtUtils::MakeMaker::JSONMETA - put JSON in your META.yml (with EU::MM)
+ExtUtils::MakeMaker::JSONMETA - replace META.yml with META.json
 
 =head1 SYNOPSIS
 
@@ -28,12 +28,20 @@ contain JSON.
 =cut
 
 no warnings 'redefine';
+my $orig = ExtUtils::MM_Any->can('metafile_target');
+*ExtUtils::MM_Any::metafile_target = sub {
+  my $self = shift;
+  my $output = $self->$orig(@_);
+  $output =~ s{META\.yml}{META.json}g;
+  return $output;
+};
+
 *ExtUtils::MM_Any::metafile_file = sub {
   my ($self, %pairs) = @_;
 
   $pairs{generated_by} = join ' version ', __PACKAGE__, __PACKAGE__->VERSION;
 
-  return JSON->new->ascii(1)->pretty->encode(\%pairs);
+  return JSON->new->ascii(1)->pretty->encode(\%pairs) . "\n";
 };
 
 =head1 SEE ALSO

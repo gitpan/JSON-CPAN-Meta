@@ -2,12 +2,12 @@ use strict;
 use warnings;
 package Module::Build::JSONMETA;
 BEGIN {
-our $VERSION = '5.000';
+our $VERSION = '6.000';
 }
 
 =head1 NAME
 
-Module::Build::JSONMETA - write META.yml with JSON syntax
+Module::Build::JSONMETA - write META.json instead of META.yml
 
 =head1 SYNOPSIS
 
@@ -32,6 +32,13 @@ expertise steps forward.
 my $CODE;
 BEGIN {
   $CODE = <<'END_CODE';
+sub new {
+  my $class = shift;
+  my $self  = $class->SUPER::new(@_);
+  $self->metafile('META.json') if $self->metafile eq 'META.yml';
+  return $self;
+}
+
 sub write_metafile {
   my ($self) = @_;
   my $data = {};
@@ -46,7 +53,7 @@ sub write_metafile {
   my $metafile = $self->metafile;
 
   open my $fh, '>', $metafile or die "can't open $metafile for writing: $!";
-  print {$fh} $json           or die "can't print metadata to $metafile: $!";
+  print {$fh} "$json\n"       or die "can't print metadata to $metafile: $!";
   close $fh                   or die "error closing $metafile: $!";
 
   $self->{wrote_metadata} = 1;
