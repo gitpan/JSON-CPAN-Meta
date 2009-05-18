@@ -2,14 +2,14 @@ use strict;
 use warnings;
 
 package ExtUtils::MakeMaker::JSONMETA;
-our $VERSION = '6.000';
+our $VERSION = '7.000';
 
 use ExtUtils::MM_Any;
 use JSON 2;
 
 =head1 NAME
 
-ExtUtils::MakeMaker::JSONMETA - replace META.yml with META.json
+ExtUtils::MakeMaker::JSONMETA - write META.json instead of META.yml
 
 =head1 SYNOPSIS
 
@@ -22,16 +22,16 @@ In your Makefile.PL:
 
 If EU::MM::JSONMETA cannot be loaded (for example, because a user who is
 installing your module does not have it or JSON installed), things will
-continue as usual.  If it can be loaded, any META.yml file produced will
-contain JSON.
+continue as usual.  If it can be loaded, a META.json file will be produced,
+containing JSON.
 
 =cut
 
-no warnings 'redefine';
-my $orig = ExtUtils::MM_Any->can('metafile_target');
+no warnings qw(once redefine);
+my $orig_m_t = ExtUtils::MM_Any->can('metafile_target');
 *ExtUtils::MM_Any::metafile_target = sub {
   my $self = shift;
-  my $output = $self->$orig(@_);
+  my $output = $self->$orig_m_t(@_);
   $output =~ s{META\.yml}{META.json}g;
   return $output;
 };
@@ -42,6 +42,14 @@ my $orig = ExtUtils::MM_Any->can('metafile_target');
   $pairs{generated_by} = join ' version ', __PACKAGE__, __PACKAGE__->VERSION;
 
   return JSON->new->ascii(1)->pretty->encode(\%pairs) . "\n";
+};
+
+my $orig_d_t = ExtUtils::MM_Any->can('distmeta_target');
+*ExtUtils::MM_Any::distmeta_target = sub {
+  my $self = shift;
+  my $output = $self->$orig_d_t(@_);
+  $output =~ s{META\.yml}{META.json}g;
+  return $output;
 };
 
 =head1 SEE ALSO

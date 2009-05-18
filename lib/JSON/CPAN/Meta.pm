@@ -1,11 +1,11 @@
 use strict;
 use warnings;
 package JSON::CPAN::Meta;
-our $VERSION = '6.000';
+our $VERSION = '7.000';
 
 =head1 NAME
 
-JSON::CPAN::Meta - JSON is YAML; emit JSON into META.yml
+JSON::CPAN::Meta - replace META.yml with META.json
 
 =head1 DESCRIPTION
 

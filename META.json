@@ -1,7 +1,7 @@
 --- #YAML:1.0
 name:                JSON-CPAN-Meta
-version:             6.000
-abstract:            JSON is YAML; emit JSON into META.json
+version:             7.000
+abstract:            replace META.json with META.json
 license:             ~
 author:              
     - Ricardo Signes <rjbs@cpan.org>
